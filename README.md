@@ -1,4 +1,4 @@
-ServiceNow Promise
+ServiceNow REST API
 ===============
 This library is a wrapper for the REST API v1
 
