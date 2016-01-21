@@ -4,8 +4,8 @@ This library is a wrapper for the REST API v1 using promises
 ## Quickstart
 
 ```javascript
-var ServiceNow = require('servicenow-promise');
-var client = new ServiceNow('instance','user','password')
+var GlideRecord = require('servicenow-rest').gliderecord;
+var GlideAggregate = require('servicenow-rest').glideaggregate;
 
 client.query('cmdb_ci_server','name=abeyserver').then(function(value) {
 	console.log(value);
