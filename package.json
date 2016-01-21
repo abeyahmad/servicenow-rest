@@ -1,0 +1,30 @@
+{
+  "name": "servicenow-rest",
+  "version": "0.0.2",
+  "description": "IN ALPHA DEVELOPMENT\nWrapper for the ServiceNow REST API: table, aggregate, import, attachment",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Abey Ahmad",
+  "license": "ISC",
+  "dependencies": {
+    "bluebird": "^3.1.1",
+    "request": "^2.67.0",
+    "require": "^2.4.20"
+  },
+  "devDependencies": {},
+  "keywords": [
+    "servicenow",
+    "gliderecord",
+    "glideaggregate"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/abeyahmad/servicenow-rest.git"
+  },
+  "bugs": {
+    "url": "https://github.com/abeyahmad/servicenow-rest/issues"
+  },
+  "homepage": "https://github.com/abeyahmad/servicenow-rest#readme"
+}
