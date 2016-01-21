@@ -1,6 +1,6 @@
 {
   "name": "servicenow-rest",
-  "version": "0.0.2",
+  "version": "0.0.5",
   "description": "IN ALPHA DEVELOPMENT\nWrapper for the ServiceNow REST API: table, aggregate, import, attachment",
   "main": "index.js",
   "scripts": {
