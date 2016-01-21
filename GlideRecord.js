@@ -30,30 +30,28 @@ var GlideRecord = (function() {
 	};
 	GlideRecord.prototype.query = function() {
 		var reqobj = this.reqobj;
-		reqobj.url = reqobj.url+this.tablename+'/';
-		reqobj.qs = thisparams;
+		reqobj.url = reqobj.url+this.tablename;
+		reqobj.qs = this.params;
 		return request.getAsync(reqobj);
 	};
 	GlideRecord.prototype.insert = function(obj) {
 		var reqobj = this.reqobj;
-		reqobj.url = reqobj.url+this.tablename+'/'+sysid;
-		reqobj.method = 'post';
+		reqobj.url = reqobj.url+this.tablename;
 		reqobj.json = true;
 		reqobj.body = obj;
-		return request.getAsync(reqobj);
+		return request.postAsync(reqobj);
 	};
 	GlideRecord.prototype.update = function(sysid,obj) {
 		var reqobj = this.reqobj;
 		reqobj.url = reqobj.url+this.tablename+'/'+sysid;
-		reqobj.method = 'patch';
 		reqobj.json = true;
 		reqobj.body = obj;
-		return request.getAsync(reqobj);
+		return request.patchAsync(reqobj);
 	};
 	GlideRecord.prototype.delete = function(sysid) {
 		var reqobj = this.reqobj;
 		reqobj.url = reqobj.url+this.tablename+'/'+sysid;
-		reqobj.method = 'delete';
+		return request.deleteAsync(reqobj)
 	};
 	GlideRecord.prototype.addEncodedQuery = function(query) {
 		this.params.sysparm_query = query;
