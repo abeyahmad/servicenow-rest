@@ -26,19 +26,34 @@ var GlideRecord = (function() {
 	GlideRecord.prototype.get = function(sysid) {
 		var reqobj = this.reqobj;
 		reqobj.url = reqobj.url+this.tablename+'/'+sysid;
-		request.getAsync(reqobj).then(function(contents){})
+		return request.getAsync(reqobj);
 	};
 	GlideRecord.prototype.query = function() {
 		var reqobj = this.reqobj;
 		reqobj.url = reqobj.url+this.tablename+'/';
 		reqobj.qs = thisparams;
-		request.getAsync(reqobj);
+		return request.getAsync(reqobj);
 	};
-	GlideRecord.prototype.update = function(obj) {
-
+	GlideRecord.prototype.insert = function(obj) {
+		var reqobj = this.reqobj;
+		reqobj.url = reqobj.url+this.tablename+'/'+sysid;
+		reqobj.method = 'post';
+		reqobj.json = true;
+		reqobj.body = obj;
+		return request.getAsync(reqobj);
+	};
+	GlideRecord.prototype.update = function(sysid,obj) {
+		var reqobj = this.reqobj;
+		reqobj.url = reqobj.url+this.tablename+'/'+sysid;
+		reqobj.method = 'patch';
+		reqobj.json = true;
+		reqobj.body = obj;
+		return request.getAsync(reqobj);
 	};
 	GlideRecord.prototype.delete = function(sysid) {
-		
+		var reqobj = this.reqobj;
+		reqobj.url = reqobj.url+this.tablename+'/'+sysid;
+		reqobj.method = 'delete';
 	};
 	GlideRecord.prototype.addEncodedQuery = function(query) {
 		this.params.sysparm_query = query;
