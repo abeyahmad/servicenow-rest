@@ -1,4 +1,4 @@
-var GlideRecord = require('./gliderecord.js')
+var GlideRecord = require('../gliderecord.js')
 
 
 var user = process.env.user,

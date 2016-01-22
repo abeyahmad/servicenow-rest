@@ -21,8 +21,6 @@ Built out skeleton of other REST APIs
 
 npm install servicenow-rest
 
-# Quickstart #
-
 # GlideRecord #
 ```javascript
 var GlideRecord = require('servicenow-rest').gliderecord;
