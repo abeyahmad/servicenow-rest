@@ -1,6 +1,6 @@
 {
   "name": "servicenow-rest",
-  "version": "0.1.2",
+  "version": "0.2.3",
   "description": "IN ALPHA DEVELOPMENT\nWrapper for the ServiceNow REST API's: Table, Aggregate, ImportSet, Attachment, RoleInheritance, IdentifyReconcile",
   "main": "index.js",
   "scripts": {
