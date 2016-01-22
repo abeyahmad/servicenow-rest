@@ -1,7 +1,7 @@
 {
   "name": "servicenow-rest",
-  "version": "0.0.5",
-  "description": "IN ALPHA DEVELOPMENT\nWrapper for the ServiceNow REST API: table, aggregate, import, attachment",
+  "version": "0.1.2",
+  "description": "IN ALPHA DEVELOPMENT\nWrapper for the ServiceNow REST API's: Table, Aggregate, ImportSet, Attachment, RoleInheritance, IdentifyReconcile",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

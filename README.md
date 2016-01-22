@@ -1,22 +1,28 @@
 ServiceNow REST API
 ===============
-This library is a wrapper for the REST API v1
+Comprehensive wrapper for the ServiceNow REST API's
 
-## Table of contents
+Update 1/21/2016:
+GlideRecord is fully functional
+Built out skeleton of other REST APIs
+
+
+
+## Table of contents ##
 - [GlideRecord](#gliderecord)
 - [GlideAggregate](#glideaggregate)
 - [ImportSet](#importset)
-- [Attachment](#attachment)
-- [IdentifyReconcile](#identifyreconcile)
-- [RoleInheritance](#roleinheritance)
+- [Attachment(Geneva)](#attachment)
+- [IdentifyReconcile(Geneva)](#identifyreconcile)
+- [RoleInheritance(Geneva)](#roleinheritance)
 
 
+# Install #
 
+npm install servicenow-rest
 
 # Quickstart #
-Early Alpha. Everything returns promises
 
-Do your worst.
 # GlideRecord #
 ```javascript
 var GlideRecord = require('servicenow-rest').gliderecord;
@@ -26,20 +32,19 @@ var gr = new GlideRecord('instance','tablename','user','password')
 
 ## query ##
 ```javascript
-
+//All methods options
 gr.setReturnFields('number,short_description');
 gr.addEncodedQuery('active=true');
 gr.setLimit(10);
 
-
-gr.query().then(function(response){ //returns promise
-	console.log(response.body.results)
+gr.query().then(function(result){ //returns promise
+	console.log(result)
 })
 ```
 ## get ##
 ```javascript
 
-gr.get('sysid').then(function(response){
+gr.get('sysid').then(function(result){
 	//your code
 }).catch(error) {
 	//errors
@@ -82,11 +87,51 @@ gr.get('sysid').then(function(response){
 # GlideAggregate #
 ```javascript
 var GlideAggregate = require('servicenow-rest').glideaggregate;
+```
+## query ##
 
 # ImportSet #
+```javascript
+var ImportSet = require('servicenow-rest').importset;
+
+var gr = new ImportSet('instance','tablename','user','password')
+```
+## get ##
+## insert ##
 
 # Attachment #
+```javascript
+var Attachment = require('servicenow-rest').attachment;
+
+var gr = new Attachment('instance','tablename','user','password')
+```
+## get ##
+## getFile ##
+## getFiles##
+## getMeta ##
+## attach ##
+## attachMultiple ##
+## delete ##
 
 # IdentifyReconcile #
+```javascript
+var IdentifyReconcile = require('servicenow-rest').idreconcile;
+
+var gr = new IdentifyReconcile('instance','tablename','user','password')
+```
+##insert##
 
 # RoleInheritance #
+```javascript
+var RoleInheritance = require('servicenow-rest').userrole
+
+var gr = new RoleInheritance('instance','tablename','user','password')
+```
+
+##get##
+
+#Questions and Issues#
+For feature requests and bug reports please use the github issue tracker. For immediate support join the ServiceNow Slack Community (get an auto-invite here: http://snowslack.io) or email abey@elucent.io
+
+#Authors#
+Abey Ahmad. 

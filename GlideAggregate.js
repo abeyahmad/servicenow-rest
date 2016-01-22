@@ -1,3 +1,7 @@
+var Promise = require('bluebird');
+var request = Promise.promisifyAll(require('request'));
+var qs = require('querystring');
+
 var GlideAggregate = (function() {
 	'use strict';
 
