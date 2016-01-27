@@ -17,23 +17,23 @@ Built out skeleton of other REST APIs
 
 
 ## Table of contents ##
-- [GlideRecord](##gliderecord)
+- [GlideRecord](#gliderecord)
   - query
   - get
   - insert
   - update
   - delete
-- [GlideAggregate](##glideaggregate)
+- [GlideAggregate](#glideaggregate)
   - query
-- [ImportSet](##importset)
+- [ImportSet](#importset)
   - get
   - insert
-- [Attachment(Geneva)](##attachment)
+- [Attachment(Geneva)](#attachment)
   - get
   - getAttachment
   - getAttachments
   - attachFile
-- [About Promises](##aboutpromises)
+- [About Promises](#aboutpromises)
 - Questions and Issues
 - Authors
 
