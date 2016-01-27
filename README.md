@@ -36,8 +36,6 @@ Built out skeleton of other REST APIs
 - [About Promises](##aboutpromises)
 - Questions and Issues
 - Authors
-<!-- - [IdentifyReconcile(Geneva)](##identifyreconcile)
-- [RoleInheritance(Geneva)](##roleinheritance) -->
 
 
 
