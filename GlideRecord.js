@@ -16,7 +16,7 @@ var GlideRecord = (function() {
     GlideRecord.prototype.get = function(sysid) {
         var reqobj = this.reqobj;
         reqobj.url = reqobj.url + '/' + sysid;
-        return request.getAsync(reqobj)
+        return request.getAsync(reqobj).then(plogic);
     };
     GlideRecord.prototype.query = function() {
         this.reqobj.qs = this.params;
