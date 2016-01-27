@@ -31,4 +31,4 @@ var gr = new ImportSet(instance, 'imp_user', user, password);
 
 gr.get('27ff57aa4f899600839b8c318110c73e').then(function(value) {
 	console.log(value);
-});
+});   
