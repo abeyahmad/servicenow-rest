@@ -6,6 +6,11 @@ Promise based
 
 Contact abey@elucent.io for any questions, feedback, issues, or feature requests.
 
+
+Update 1/27/2016:
+Added clone method to GlideRecord
+
+
 Update 1/26/2016:
 v1 Release
 
@@ -22,6 +27,7 @@ Built out skeleton of other REST APIs
   - get
   - insert
   - update
+  - clone
   - delete
 - [GlideAggregate](#glideaggregate)
   - query
@@ -94,6 +100,18 @@ gr.update('sysid',obj).then(function(response){
 	//errors
 })
 ```
+### clone ###
+```javascript
+//two parameters
+//sysid of record you want to clone
+//array fields that you want to clone
+var arr1 = ['short_description','description']
+gr.clone('sysid',arr1).then(function(value) {
+	console.log(value);
+})
+
+
+
 ### delete ###
 ```javascript
 
