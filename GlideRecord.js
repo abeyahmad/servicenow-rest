@@ -6,14 +6,15 @@ var qs = require('querystring');
 var GlideRecord = (function() {
     'use strict';
 
-    function GlideRecord(instance, tablename, user, password) {
+    function GlideRecord(instance, tablename, user, password, apiversion) {
         // enforces new
         if (!(this instanceof GlideRecord)) {
             return new GlideRecord(tablename);
         }
         this.tablename = tablename;
         this.instance = instance;
-        this.reqobj = new req(instance, tablename, user, password);
+		this.apiversion = apiversion ? apiversion + '/' : '';
+        this.reqobj = new req(instance, tablename, user, password, this.apiversion);
         this.params = {};
     }
     GlideRecord.prototype.get = function(sysid) {
@@ -80,13 +81,13 @@ var GlideRecord = (function() {
         this.params.sysparm_exclude_reference_link
     };
     GlideRecord.prototype.reset = function() {
-        this.reqobj = new req(this.instance, this.tablename,this.reqobj.auth.user, this.reqobj.auth.pass);
+        this.reqobj = new req(this.instance, this.tablename,this.reqobj.auth.user, this.reqobj.auth.pass, this.apiversion);
     };
     return GlideRecord;
 
-    function req(instance, tablename, user, password) {
+    function req(instance, tablename, user, password, apiversion) {
 
-        this.url = 'https://' + instance + '.service-now.com/api/now/v1/table/' + tablename,
+        this.url = 'https://' + instance + '.service-now.com/api/now/' + apiversion + 'table/' + tablename,
         this.header = {
             'Accept': 'application/json'
         };
