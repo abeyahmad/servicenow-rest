@@ -13,7 +13,7 @@ var GlideRecord = (function() {
         }
         this.tablename = tablename;
         this.instance = instance;
-		this.apiversion = apiversion ? apiversion + '/' : '';
+        this.apiversion = apiversion ? apiversion + '/' : '';
         this.reqobj = new req(instance, tablename, user, password, this.apiversion);
         this.params = {};
     }
