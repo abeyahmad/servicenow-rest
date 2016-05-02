@@ -165,9 +165,4 @@ var Attachment = (function() {
         return Promise.resolve("Delete success");
     }
 }());
-
-var att = new Attachment('neustarint', 's_iahmad', 'I09231990s');
-att.delete('0459b2436f4b96002f49060d5d3ee411').then(function(value) {
-    console.log(value);
-});
 module.exports = Attachment
