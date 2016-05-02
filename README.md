@@ -170,6 +170,12 @@ gr.get(sysid).then(function(value) {
 	console.log(value);
 })
 ```
+### delete ###
+```javascript
+gr.delete(sysid).then(function(value) {
+	console.log(value);
+})
+```
 ### getAttachment ###
 ```javascript
 gr.getAttachment(sysid).then(function(value) {

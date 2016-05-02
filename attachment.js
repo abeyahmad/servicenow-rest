@@ -123,6 +123,7 @@ var Attachment = (function() {
         });
         return attachment
     };
+    
 
     Attachment.prototype.addEncodedQuery = function(value) {
         this.params.sysparm_query = value;
