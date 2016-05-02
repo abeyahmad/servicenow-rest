@@ -6,14 +6,15 @@ var mime = require('mime');
 var Attachment = (function() {
     'use strict';
 
-    function Attachment(instance, user, password) {
+    function Attachment(instance, user, password,apiversion) {
         // enforces new
         if (!(this instanceof Attachment)) {
             return new Attachment(instance, user, password);
         }
         this.instance = instance;
+        this.apiversion = apiversion ? apiversion + '/' : '';
         this.params = {};
-        this.reqobj = new req(instance, user, password)
+        this.reqobj = new req(instance, user, password,this.apiversion);
     }
 
     Attachment.prototype.get = function(sysid) {
@@ -25,6 +26,10 @@ var Attachment = (function() {
         return request.getAsync(this.reqobj).then(plogic)
 
     };
+    Attachment.prototype.delete = function(sysid) {
+        this.reqobj.url += '/' + sysid;
+        return request.delAsync(this.reqobj).then(dlogic);
+    }
     Attachment.prototype.getFileCallback = function(sysid, dir, callback) {
         this.reqobj.url += '/' + sysid + '/file';
         this.reqobj.encoding = null;
@@ -44,7 +49,7 @@ var Attachment = (function() {
             })
     };
     Attachment.prototype.getAttachment = function(sysid, dir) {
-        if(!dir) var dir = ''
+        if (!dir) var dir = ''
         this.reqobj.url += '/' + sysid + '/file';
         this.reqobj.encoding = null;
         var that = this;
@@ -114,7 +119,7 @@ var Attachment = (function() {
                         }
                         resolve(response.body.result)
                     })
-            )
+                )
         });
         return attachment
     };
@@ -126,17 +131,17 @@ var Attachment = (function() {
         this.params.sysparm_limit = value;
     };
     Attachment.prototype.reset = function(value) {
-        this.reqobj = new req(this.instance, this.reqobj.auth.user, this.reqobj.auth.pass);
+        this.reqobj = new req(this.instance, this.reqobj.auth.user, this.reqobj.auth.pass,this.apiversion);
     }
 
     return Attachment;
 
-    function req(instance, user, password) {
+    function req(instance, user, password,apiversion) {
 
-        this.url = 'https://' + instance + '.service-now.com/api/now/v1/attachment',
-        this.headers = {
-            'Accept': 'application/json'
-        };
+        this.url = 'https://' + instance + '.service-now.com/api/now/' + apiversion + '/attachment',
+            this.headers = {
+                'Accept': 'application/json'
+            };
         this.json = true;
         this.auth = {
             user: user,
@@ -151,5 +156,18 @@ var Attachment = (function() {
         }
         return Promise.resolve(value.body.result);
     }
+
+    function dlogic(value) {
+        var statuscode = value.statusCode;
+        if (statuscode == 400 || statuscode == 404 || statuscode == 401) {
+            return Promise.reject("Delete failed " + statuscode);
+        }
+        return Promise.resolve("Delete success");
+    }
 }());
+
+var att = new Attachment('neustarint', 's_iahmad', 'I09231990s');
+att.delete('0459b2436f4b96002f49060d5d3ee411').then(function(value) {
+    console.log(value);
+});
 module.exports = Attachment
