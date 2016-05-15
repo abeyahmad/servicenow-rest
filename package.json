@@ -1,6 +1,6 @@
 {
   "name": "servicenow-rest",
-  "version": "1.0.9",
+  "version": "1.1.0",
   "description": "Comprehensive wrapper for ServiceNow REST APIs: Table, Aggregate, ImportSet, Attachment, RoleInheritance, IdentifyReconcile",
   "main": "index.js",
   "scripts": {
