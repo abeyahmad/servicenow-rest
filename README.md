@@ -6,7 +6,8 @@ Promise based
 
 Contact abey@elucent.io for any questions, feedback, issues, or feature requests.
 
-
+Update 5/29/2016:
+Major revisions to GlideRecord and Attachment API
 Update 1/27/2016:
 Added clone method to GlideRecord
 
@@ -214,7 +215,7 @@ gr.query() //This right here returns a 'promise'
 
 //alternative
 gr.query().then(function(value) {
-	
+
 }).catch(function(error) {
 	/error code here
 })

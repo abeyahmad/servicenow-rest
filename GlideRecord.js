@@ -3,107 +3,88 @@ var request = Promise.promisifyAll(require('request'));
 request.debug;
 var qs = require('querystring');
 
-var GlideRecord = (function() {
-    'use strict';
+var GlideRecord = function(instance, tablename, user, password, apiversion) {
 
-    function GlideRecord(instance, tablename, user, password, apiversion) {
-        // enforces new
-        if (!(this instanceof GlideRecord)) {
-            return new GlideRecord(tablename);
-        }
-        this.tablename = tablename;
-        this.instance = instance;
-        this.apiversion = apiversion ? apiversion + '/' : '';
-        this.reqobj = new req(instance, tablename, user, password, this.apiversion);
-        this.params = {};
-    }
-    GlideRecord.prototype.get = function(sysid) {
-        var reqobj = this.reqobj;
-        reqobj.url = reqobj.url + '/' + sysid;
-        return request.getAsync(reqobj).then(plogic);
-    };
-    GlideRecord.prototype.clone = function(sysid, clonefields) {
+    this.apiversion = apiversion ? apiversion + '/' : '';
+    this.baseurl = 'https://' + instance + '.service-now.com/api/now/' + this.apiversion + 'table/' + tablename;
+    this.user = user;
+    this.pass = password;
+    this.tablename = tablename;
+    this.instance = instance;
+
+    this.params = {};
+};
+GlideRecord.prototype = {
+    get: function(sysid) {
+        this.url = this.baseurl + '/' + sysid;
+        return request.getAsync(this.reqobj).then(this.plogic);
+    },
+    query: function() {
+        this.url = this.baseurl;
+        return request.getAsync(this.reqobj).then(this.plogic);
+    },
+    insert: function(obj) {
+        this.url = this.baseurl;
+        console.log(this.url);
+        this.body = obj;
+        return request.postAsync(this.postobj).then(this.plogic);
+    },
+    update: function(sysid, obj) {
+        this.url = this.baseurl + '/' + sysid;
+        this.body = obj;
+        return request.patchAsync(this.postobj).then(this.plogic);
+    },
+    delete: function(sysid) {
+        this.url = this.baseurl + '/' + sysid;
+        return request.delAsync(this.reqobj).then(this.dlogic);
+    },
+    clone: function(sysid, clonefields) {
         var self = this;
-        this.setDisplay(true)
+        this.setDisplay(true);
         this.params['sysparm_exclude_reference_link'] = true
-        this.get(sysid)
-            .then(function(value) {
-                var obj = cloneobj(value,clonefields);
-                self.reset();
-                console.log(obj);
-                self.insert(obj).then(function(val) {
-                    console.log(val)
-                })
+        this.get(sysid).then(function(value) {
+            var obj = this.cloneobj(value, clonefields);
+            self.insert(obj).then(function(val) {
+                console.log(val)
             })
-    };
-    GlideRecord.prototype.query = function() {
-        this.reqobj.qs = this.params;
-        return request.getAsync(this.reqobj).then(plogic);
-    };
-    GlideRecord.prototype.insert = function(obj) {
-        var reqobj = this.reqobj;
-        reqobj.body = obj;
-        reqobj.qs = this.params;
-        // console.log('break2')
-        return request.postAsync(reqobj).then(plogic);
-    };
-    GlideRecord.prototype.update = function(sysid, obj) {
-        var reqobj = this.reqobj;
-        reqobj.url = reqobj.url + '/' + sysid;
-        reqobj.body = obj;
-        reqobj.qs = this.params;
-        return request.patchAsync(reqobj).then(plogic);
-    };
-    GlideRecord.prototype.delete = function(sysid) {
-        var reqobj = this.reqobj;
-        reqobj.url = reqobj.url + '/' + sysid;
-        return request.delAsync(reqobj).then(dlogic);
-    };
-    GlideRecord.prototype.addEncodedQuery = function(value) {
-        this.params.sysparm_query = value;
-    };
-    GlideRecord.prototype.setLimit = function(value) {
-        this.params.sysparm_limit = value
-    };
-    GlideRecord.prototype.setReturnFields = function(value) {
-        this.params.sysparm_fields = value;
-    };
-    GlideRecord.prototype.setDisplay = function(value) {
-        this.params.sysparm_display_value = value;
-    };
-    GlideRecord.prototype.setView = function(value) {
-        this.params.sysparm_view = value;
-    };
-    GlideRecord.prototype.setOffset = function(value) {
-        this.params.sysparm_offset = value;
-    };
-    GlideRecord.prototype.setExcludeReference = function(value) {
-        this.params.sysparm_exclude_reference_link
-    };
-    GlideRecord.prototype.reset = function() {
-        this.reqobj = new req(this.instance, this.tablename,this.reqobj.auth.user, this.reqobj.auth.pass, this.apiversion);
-    };
-    return GlideRecord;
-
-    function req(instance, tablename, user, password, apiversion) {
-
-        this.url = 'https://' + instance + '.service-now.com/api/now/' + apiversion + 'table/' + tablename,
-        this.header = {
-            'Accept': 'application/json'
-        };
-        this.json = true;
-        this.auth = {
-            user: user,
-            password: password
+        })
+    },
+    get reqobj() {
+        return {
+            url: this.url || this.baseurl,
+            header: {
+                'Accept': 'application/json'
+            },
+            auth: {
+                user: this.user,
+                pass: this.pass
+            },
+            json: true,
+            qs: this.params
         }
-    }
+    },
+    get postobj() {
+        return {
+            url: this.url || this.baseurl,
+            header: {
+                'Accept': 'application/json'
+            },
+            auth: {
+                user: this.user,
+                pass: this.pass
+            },
+            json: true,
+            qs: this.params,
+            body: this.body
+        }
+    },
 
-    function cloneobj(obj, clonefields) {
+    cloneobj: function(obj, clonefields) {
         var obj = obj
         var obj1 = {};
-        clonefields.forEach(function(field, index, arr) {
+        clonefields.forEach(function(field) {
             if (obj.hasOwnProperty(field)) {
-                if(typeof obj[field] == 'object') {
+                if (typeof obj[field] == 'object') {
                     obj1[field] = obj[field]['value']
                 } else {
                     obj1[field] = obj[field]
@@ -111,28 +92,92 @@ var GlideRecord = (function() {
             }
         })
         return obj1
-    }
+    },
 
-    function plogic(value) {
+    plogic: function(value) {
         var statuscode = value.statusCode;
         if (statuscode == 400 || statuscode == 404 || statuscode == 401) {
             return Promise.reject(value.body)
         }
         return Promise.resolve(value.body.result);
-    }
+    },
 
-    function dlogic(value) {
+    dlogic: function(value) {
         var statuscode = value.statusCode;
         if (statuscode == 400 || statuscode == 404 || statuscode == 401) {
             return Promise.reject("Delete failed")
         }
         return Promise.resolve("Delete success");
+    },
+    addEncodedQuery: function(value) {
+        this.params.sysparm_query = value;
+    },
+    setEncodedQuery: function(value) {
+        this.params.sysparm_query = value;
+    },
+    setLimit: function(value) {
+        this.params.sysparm_limit = value
+    },
+    setReturnFields: function(value) {
+        this.params.sysparm_fields = value;
+    },
+    setDisplay: function(value) {
+        this.params.sysparm_display_value = value;
+    },
+    setView: function(value) {
+        this.params.sysparm_view = value;
+    },
+    setOffset: function(value) {
+        this.params.sysparm_offset = value;
+    },
+    setExcludeReference: function(value) {
+        this.params.sysparm_exclude_reference_link = value;
+    },
+    set limit(value) {
+        this.params.sysparm_limit = value
+    },
+    set returnFields(value) {
+        this.params.sysparm_fields = value;
+    },
+    set display(value) {
+        this.params.sysparm_display_value = value;
+    },
+    set view(value) {
+        this.params.sysparm_view = value;
+    },
+    set offset(value) {
+        this.params.sysparm_offset = value;
+    },
+    set excludeReference(value) {
+        this.params.sysparm_exclude_reference_link;
+    },
+    set encodedQuery(str) {
+        this.params.sysparm_query = value;
+    },
+    get encodedQuery() {
+        return this.params.sysparm_query;
+    },
+    get limit() {
+        return this.params.sysparm_limit
+    },
+    get returnFields() {
+        return this.params.sysparm_fields;
+    },
+    get display() {
+        return this.params.sysparm_display_value;
+    },
+    get view() {
+        return this.params.sysparm_view;
+    },
+    get offset() {
+        return this.params.sysparm_offset;
+    },
+    get excludeReference() {
+        return this.params.sysparm_exclude_reference_link;
+    },
+    get encodedQuery() {
+        return this.params.sysparm_query;
     }
 
-
-}())
-
-
-
-
+}
 module.exports = GlideRecord;
