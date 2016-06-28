@@ -174,9 +174,6 @@ GlideRecord.prototype = {
     },
     get excludeReference() {
         return this.params.sysparm_exclude_reference_link;
-    },
-    get encodedQuery() {
-        return this.params.sysparm_query;
     }
 
 }
