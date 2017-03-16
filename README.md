@@ -54,9 +54,9 @@ npm install servicenow-rest
 ```javascript
 var GlideRecord = require('servicenow-rest').gliderecord;
 
-var gr = new GlideRecord('instance','tablename','user','password')
+var gr = new GlideRecord('instance','tablename','user','password','v1')
 ```
-
+Version is optional
 ### query ###
 ```javascript
 //methods options
