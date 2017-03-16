@@ -50,7 +50,7 @@ GlideRecord.prototype = {
         })
     },
     get reqobj() {
-        return {
+        var options = {
             url: this.url || this.baseurl,
             header: {
                 'Accept': 'application/json'
@@ -62,6 +62,10 @@ GlideRecord.prototype = {
             json: true,
             qs: this.params
         }
+        if(this.proxy) {
+            options.proxy = this.proxy
+        }
+        return options;
     },
     get postobj() {
         return {
@@ -93,7 +97,9 @@ GlideRecord.prototype = {
         })
         return obj1
     },
-
+    setProxy: function(url) {
+        this.proxy = url;
+    },
     plogic: function(value) {
         var statuscode = value.statusCode;
         if (statuscode == 400 || statuscode == 404 || statuscode == 401) {

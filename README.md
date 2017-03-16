@@ -110,9 +110,13 @@ var arr1 = ['short_description','description']
 gr.clone('sysid',arr1).then(function(value) {
 	console.log(value);
 })
+```
+### addProxy ###
+If proxy requires credentials they need to be embedded in the URL
 
-
-
+```javascript
+gr.addProxy('https://user:pass@myproxy.com');
+```
 ### delete ###
 ```javascript
 

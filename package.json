@@ -1,7 +1,7 @@
 {
   "name": "servicenow-rest",
-  "version": "1.2.1",
-  "description": "Comprehensive wrapper for ServiceNow REST APIs: Table, Aggregate, ImportSet, Attachment, RoleInheritance, IdentifyReconcile",
+  "version": "1.2.2",
+  "description": "Comprehensive wrapper for ServiceNow REST APIs: Table, Aggregate, ImportSet, Attachment",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -16,9 +16,11 @@
   },
   "devDependencies": {},
   "keywords": [
-    "servicenow",
-    "gliderecord",
-    "glideaggregate"
+    "ServiceNow",
+    "ServiceNow",
+    "GlideRecord",
+    "glideaggregate",
+    "Service Catalog"
   ],
   "repository": {
     "type": "git",
